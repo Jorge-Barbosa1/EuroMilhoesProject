@@ -1,9 +1,13 @@
 // load http module
-const exp = require('constants');
+const express = require('express');
 var http = require('http');
+const path = require('path');  
 
 // create a server object
 var server = http.createServer();
+
+// create an express app
+const app = express();
 
 //Serve the public directory
 app.use(express.static(path.join(__dirname, 'public')));
