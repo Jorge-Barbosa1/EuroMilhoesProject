@@ -1,34 +1,18 @@
-// load http module
-const express = require('express');
-var http = require('http');
-const path = require('path');  
+const express = require('express');  // Importa o módulo express
+const path = require('path');        // Importa o módulo path para trabalhar com caminhos de diretório
 
-// create a server object
-var server = http.createServer();
+const app = express();  // Cria uma instância do Express
 
-// create an express app
-const app = express();
-
-//Serve the public directory
+// Middleware para servir arquivos estáticos da pasta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Rota principal (raiz) que servirá o arquivo index.html
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// .on() is an event listener. create listener to 'request' events. Builds a response.
-server.on('request', function(req,res) {
-  res.statusCode = 200;                         // status
-  res.setHeader('Content-Type','text/html');    // headers
-  res.write('Hello!');                          // body
-  res.end();                                    // signals the server that respºonse has been sent.
-  console.log('Hello sent')
-})
-
-// log when it starts listening
-server.on('listening', function() {             // event that is triggered when server starts listening
-  console.log('Server running and listening')
-})
-
-// start the server at por 3000
-server.listen(3000);
+// Inicializa o servidor na porta 3000 ou uma porta fornecida pelo ambiente (no Render, por exemplo)
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
+});
