@@ -1,8 +1,16 @@
 // load http module
+const exp = require('constants');
 var http = require('http');
 
 // create a server object
 var server = http.createServer();
+
+//Serve the public directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // .on() is an event listener. create listener to 'request' events. Builds a response.
 server.on('request', function(req,res) {
